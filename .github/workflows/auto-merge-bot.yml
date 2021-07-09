@@ -1,6 +1,12 @@
-on: [pull_request_target, pull_request_review]
+on: [pull_request_target]
 name: Auto-Merge Bot
 jobs:
+  enable-auto-merge:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: alexwilson/enable-github-automerge-action@main
+      with:
+        github-token: ${{ secrets.TOKEN }}
   auto_merge_bot:
     runs-on: ubuntu-latest
     name: EIP Auto-Merge Bot
@@ -12,7 +18,8 @@ jobs:
         with:
           node-version: '14'
       - name: auto-merge-bot
-        uses: alita-moore/EIP-Bot@a3abd721e9a3613e23f798d9fb84d330b111682e # tag 1.1.1
+        uses: ethereum/EIP-Bot@4780888dca594970b56f3a2bdb9618c88868cf4f # master
         id: auto-merge-bot
         with:
           GITHUB-TOKEN: ${{ secrets.TOKEN }} 
+          MERGE_ENABLED: false
